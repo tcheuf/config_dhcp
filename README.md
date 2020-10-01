@@ -1,2 +1,2 @@
 # projet6
-automatisation installation serveur dhcp dns et ntp
+automatiser l'installation des serveur dhcp dns et ntp avec python
