@@ -1,8 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding: utf8
+
 import sys, getopt
 import fileinput
-import os
+import apt
 from socket import *
 import yaml
 import os.path
@@ -11,14 +12,18 @@ import configparser # Permet de parser le fichier de paramètres
 
 ###########	remplace des éléments	###########
 def replaceAll(file,searchExp,replaceExp):
-    for line in fileinput.input(file, inplace=1):
-        if searchExp in line:
-            line = line.replace(searchExp,replaceExp)
-        sys.stdout.write(line)
+	for line in fileinput.input(file, inplace=1):
+		if searchExp in line:
+			line = line.replace(searchExp,replaceExp)
+		sys.stdout.write(line)
+
 
 ###########	DHCP	###########
 def dhcp_conf(server_name,subnet_mask,domain,option_dns,sous_res,interfaces):
-	os.system("apt-get install -y isc-dhcp-server")
+	cache = apt.Cache()
+	pkg = cache['isc-dhcp-server'] # Access the Package object for python-apt
+	pkg.mark_install()
+	cache.commit()	
 
 	fichier = open("/etc/dhcp/dhcpd.conf","w")
 	fichier.write("##### Option générale par défaut #####\n")
@@ -36,7 +41,7 @@ def dhcp_conf(server_name,subnet_mask,domain,option_dns,sous_res,interfaces):
 	fichier.write("\n##### RÉSEAUX #####\n")
 	fichier.write("\n## Déclaration sous réseaux")
 
-	interfaces= ''
+	##interfaces= ''
 	config = configparser.RawConfigParser() # On créé un nouvel objet "config"
 	config.read('res.ini')
 
@@ -57,36 +62,11 @@ def dhcp_conf(server_name,subnet_mask,domain,option_dns,sous_res,interfaces):
 		fichier.write("\n  option ntp-servers "+ntp+";")
 		fichier.write("\n  option routers "+routers+";")
 		fichier.write("\n  range "+pool+";")
-		fichier.write("\n  ping-check = 1;")
 		fichier.write("\n}\n")
 	fichier.close()
 
 	replaceAll("/etc/default/isc-dhcp-server","INTERFACESv4=\"\"","INTERFACESv4=\""+interfaces+"\"")
 	os.system("service isc-dhcp-server restart")
-
-###########	DNS	###########
-def dns_conf(domain,ip):
-	os.system("apt-get install -y bind9")
-	os.system("cp /etc/bind/db.local /etc/bind/"+domain)
-		
-	a = open("/etc/bind/named.conf.local","w")
-	a.write("\nzone \""+domain+"\" {\n")
-	a.write("	type master;\n")
-	a.write("	file \"/etc/bind/"+domain+"\";\n")
-	a.write("	allow-query { any; };\n")
-	a.write("};")
-	a.close()
-
-	replaceAll("/etc/bind/"+domain,"localhost. root.localhost.","ns.site."+domain+". root."+domain+".")
-	replaceAll("/etc/bind/"+domain,"localhost.","ns")
-	replaceAll("/etc/bind/"+domain,"127.0.0.1",ip)
-	replaceAll("/etc/bind/"+domain,"@	IN	AAAA	::1","ns	IN	A	"+ip)	
-	f=open("/etc/bind/"+domain,"a")
-	f.write("www	IN	A	"+ip)
-	f.write("\nmailx	IN	A	"+ip)
-	f.write("\n@	IN MX 100 mailx."+domain+".")
-	f.close()
-	os.system("service bind9 restart")
 
 ###########	main	###########
 def main(argv):
@@ -130,8 +110,7 @@ def main(argv):
          option_dns = input("Entrez les options dns (si plusieurs mettez ceci ', ' entre les ip, ex : 1.1.1.1, 2.2.2.2) : ")
          sous_res=int(input("Entrez le nombre de sous réseaux : "))
          interfaces=input("Entrez les interfaces d'écoute (ex si plusieurs ens33 ens34) : ")
-   dns_conf(domain,ip)
-   dhcp_conf(server_name,subnet_mask,domain,option_dns,sous_res,interfaces)
+   dhcp_conf("routeur","24","local","192.168.1.1",2,"enp0s8 enp0s9")
 
 
 if __name__ == "__main__":
