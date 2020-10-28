@@ -72,7 +72,6 @@ def dhcp_conf(server_name,subnet_mask,domain,option_dns,sous_res,interfaces):
 def main(argv):
 
    domain = ''
-   ip = ''
    server_name = ''
    subnet_mask = ''
    option_dns = ''
@@ -80,13 +79,13 @@ def main(argv):
    interfaces = ''
 
    try:
-      opts, args = getopt.getopt(argv,"hid:a:n:m:o:r:f:",["domain=","addr=","name=","mask=","optdns=","reseau=","interfaces="])
+      opts, args = getopt.getopt(argv,"hd:n:m:o:r:f:",["domain=","name=","mask=","optdns=","reseau=","interfaces="])
    except getopt.GetoptError:
-      print ('dhcp_dns.py -d <domain>  -n <server name> -m <subnet mask> -o <option dns> -r <nb sous res> --interfaces="interface1 interface2 or_more"')
+      print ('dhcp.py -d <domain>  -n <server name> -m <subnet mask> -o <option dns> -r <nb sous res> --interfaces="interface1 interface2 or_more"')
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print ('dhcp_dns.py -d <domain>  -n <server name> -m <subnet mask> -o <option dns> -r <nb sous res> --interfaces="interface1 interface2 or_more"')
+         print ('dhcp.py -d <domain>  -n <server name> -m <subnet mask> -o <option dns> -r <nb sous res> --interfaces="interface1 interface2 or_more"')
          sys.exit()
       elif opt in ("-d", "--domain"):
          domain = arg
