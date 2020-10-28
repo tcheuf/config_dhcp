@@ -43,7 +43,7 @@ def dhcp_conf(server_name,subnet_mask,domain,option_dns,sous_res,interfaces):
 
 	##interfaces= ''
 	config = configparser.RawConfigParser() # On créé un nouvel objet "config"
-	config.read('res.ini')
+	config.read('reseau.ini')
 
 	i=0
 	for i in range(0,sous_res):
@@ -82,16 +82,14 @@ def main(argv):
    try:
       opts, args = getopt.getopt(argv,"hid:a:n:m:o:r:f:",["domain=","addr=","name=","mask=","optdns=","reseau=","interfaces="])
    except getopt.GetoptError:
-      print ('dhcp_dns.py -i pour le mode interactif ou dhcp_dns.py -d <domain> -a <addr ip> -n <server name> -m <subnet mask> -o <option dns> -r <nb sous res> --interfaces="interface1 interface2 or_more"')
+      print ('dhcp_dns.py -d <domain>  -n <server name> -m <subnet mask> -o <option dns> -r <nb sous res> --interfaces="interface1 interface2 or_more"')
       sys.exit(2)
    for opt, arg in opts:
       if opt == '-h':
-         print ('dhcp_dns.py -i mode interactif ou dhcp_dns.py -d <domain> -a <addr ip> -n <server name> -m <subnet mask> -o <option dns> -r <nb sous res> --interfaces="interface1 interface2 or_more"')
+         print ('dhcp_dns.py -d <domain>  -n <server name> -m <subnet mask> -o <option dns> -r <nb sous res> --interfaces="interface1 interface2 or_more"')
          sys.exit()
       elif opt in ("-d", "--domain"):
          domain = arg
-      elif opt in ("-a", "--addr"):
-         ip = arg
       elif opt in ("-n", "--name"):
          server_name = arg
       elif opt in ("-m", "--mask"):
@@ -102,15 +100,8 @@ def main(argv):
          sous_res = int(arg)
       elif opt in ("-f", "--interfaces"):
          interfaces = arg
-      elif opt in ("-i", "--i"):
-         domain = input("Entrez le nom de domaine : ")
-         ip = input("Entrez l'ip du serveur dns : ")
-         server_name = input("Entrez le nom du serveur DHCP (ex : dns.ubuntu-fr.lan) : ") 
-         subnet_mask = input("Entrez le masque : ")
-         option_dns = input("Entrez les options dns (si plusieurs mettez ceci ', ' entre les ip, ex : 1.1.1.1, 2.2.2.2) : ")
-         sous_res=int(input("Entrez le nombre de sous réseaux : "))
-         interfaces=input("Entrez les interfaces d'écoute (ex si plusieurs ens33 ens34) : ")
-   dhcp_conf("routeur","24","local","192.168.1.1",2,"enp0s8 enp0s9")
+           
+   dhcp_conf(server_name,subnet_mask,domain,option_dns,sous_res,interfaces)
 
 
 if __name__ == "__main__":
