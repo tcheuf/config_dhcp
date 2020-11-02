@@ -13,13 +13,13 @@ Pour lancer le script faire:
   
 
 
-**options ** 
+**options**
 
--h : aide  
--d : rentrer votre nom de domaine dns (ex : mondomaine.fr)  
--n : rentrer votre nom de serveur dhcp (ex : routeur)  
--m : rentrer votre masque pour le serveur (ex : 255.255.255.0)  
--o : rentrer les options dns (ex : 8.8.8.8,1.1.1.1)  
--r : rentrer le nombre de sous réseau que vous avez configuré dans le fichier reseau.ini si vous mettez pas le bon, vos sous réseau ne 
-seront pas configurés.  
---interfaces : rentrer vos interfaces d'écoute du serveur dhcp (ex : "enp0s8 enp0s9")  
+    -h : aide  
+    -d : rentrer votre nom de domaine dns (ex : mondomaine.fr)  
+    -n : rentrer votre nom de serveur dhcp (ex : routeur)  
+    -m : rentrer votre masque pour le serveur (ex : 255.255.255.0)  
+    -o : rentrer les options dns (ex : 8.8.8.8,1.1.1.1)  
+    -r : rentrer le nombre de sous réseau que vous avez configuré dans le fichier reseau.ini si vous mettez pas le bon, vos sous réseau ne 
+    seront pas configurés.  
+    --interfaces : rentrer vos interfaces d'écoute du serveur dhcp (ex : "enp0s8 enp0s9")  
