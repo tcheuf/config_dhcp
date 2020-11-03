@@ -1,7 +1,7 @@
 # config_dhcp
 
 Ce script permet d'installer et configurer très rapidement un serveur dhcp .
-On dispose ici de deux fichiers dhcp.py et reseau.ini qui doivent être enregistrés dans le même repertoire.  
+On dispose ici de deux fichiers dhcp.py et reseau.ini qui doivent être enregistrés sous le même repertoire.  
 
 Le fichier reseau.ini doit contenir les differents sous réseaux déclarés comme suit:
   
