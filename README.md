@@ -1,4 +1,4 @@
-**config_dhcp**
+# config_dhcp
 
 Ce script permet d'installer et configurer très rapidement un serveur dhcp .
 On dispose ici de deux fichiers dhcp.py et reseau.ini qui doivent être enregistrés dans le même repertoire.  
@@ -13,7 +13,7 @@ Pour lancer le script faire:
   
 
 
-**options**
+## options
 
     -h : aide  
     -d : rentrer votre nom de domaine dns (ex : mondomaine.fr)  
