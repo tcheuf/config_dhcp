@@ -5,7 +5,7 @@ On dispose ici de deux fichiers dhcp.py et reseau.ini qui doivent être enregist
 
 Le fichier reseau.ini doit contenir les differents sous réseaux déclarés comme suit:
   
-  <img src="https://user-images.githubusercontent.com/72216948/97880528-91ab9700-1d21-11eb-88eb-d4ac8a55f988.png" width="100%"></img>   
+  <img src="https://user-images.githubusercontent.com/72216948/97880528-91ab9700-1d21-11eb-88eb-d4ac8a55f988.png" width="80%"></img>   
 
 Pour lancer le script faire:  
 
