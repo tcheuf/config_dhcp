@@ -10,6 +10,8 @@ Le fichier reseau.ini doit contenir les differents sous réseaux déclarés comm
 Pour lancer le script faire:  
 
        sudo ./dhcp.py -d <domain> -n <server name> -m <subnet mask> -o <option dns> -r <nb sous res> --interfaces=<"interface1 interface2 ..."> 
+       
+       
   
 
 
